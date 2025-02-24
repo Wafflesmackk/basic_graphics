@@ -48,7 +48,7 @@ void CMyApp::Clean()
 {
 }
 
-void CMyApp::Update( const SUpdateInfo& updateInfo )
+void CMyApp::Update(const SUpdateInfo& updateInfo)
 {
 	m_ElapsedTimeInSec = updateInfo.ElapsedTimeInSec;
 }
@@ -72,7 +72,7 @@ void CMyApp::RenderGUI()
 // https://wiki.libsdl.org/SDL2/SDL_Keymod
 
 void CMyApp::KeyboardDown(const SDL_KeyboardEvent& key)
-{	
+{
 }
 
 void CMyApp::KeyboardUp(const SDL_KeyboardEvent& key)
@@ -112,7 +112,7 @@ void CMyApp::Resize(int _w, int _h)
 // Le nem kezelt, egzotikus esemény kezelése
 // https://wiki.libsdl.org/SDL2/SDL_Event
 
-void CMyApp::OtherEvent( const SDL_Event& ev )
+void CMyApp::OtherEvent(const SDL_Event& ev)
 {
 
 }

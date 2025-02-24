@@ -49,5 +49,10 @@ protected:
 
 	float m_ElapsedTimeInSec = 0.0f;
 
+	float m_col[3] = { 1.f,1.f,1.f };
+
+	float m_w, m_h;
+
+	bool m_isLeftButtonDown = false;
 };
 

@@ -107,6 +107,12 @@ void CMyApp::KeyboardDown(const SDL_KeyboardEvent& key)
 
 void CMyApp::KeyboardUp(const SDL_KeyboardEvent& key)
 {
+	if (key.repeat == 0) {
+		if (key.keysym.sym == SDLK_F5 && key.keysym.mod & KMOD_CTRL) {
+			CleanShaders();
+			InitShaders();
+		}
+	}
 }
 
 // https://wiki.libsdl.org/SDL2/SDL_MouseMotionEvent

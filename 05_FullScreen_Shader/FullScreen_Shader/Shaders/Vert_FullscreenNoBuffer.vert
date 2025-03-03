@@ -24,10 +24,13 @@ vec4 colors[6] = vec4[6](
 
 // a pipeline-ban tovább adandó értékek 
 out vec4 color;
+out vec2 ScreenPosition; 
 
 void main()
 {
 	// gl_VertexID: https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/gl_VertexID.xhtml
 	gl_Position  = positions[gl_VertexID];
+	ScreenPosition = positions[gl_VertexID].xy;
+
 	color = colors[gl_VertexID];
 }

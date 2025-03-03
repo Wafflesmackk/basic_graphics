@@ -28,14 +28,14 @@ void CMyApp::SetupDebugCallback()
 void CMyApp::InitShaders()
 {
 	m_programID = glCreateProgram();
-    AttachShader( m_programID, GL_VERTEX_SHADER,   "Shaders/Vert_FullscreenNoBuffer.vert" );
-    AttachShader( m_programID, GL_FRAGMENT_SHADER, "Shaders/Frag_PosCol_Time.frag" );
-    LinkProgram( m_programID );
+	AttachShader(m_programID, GL_VERTEX_SHADER, "Shaders/Vert_FullscreenNoBuffer.vert");
+	AttachShader(m_programID, GL_FRAGMENT_SHADER, "Shaders/Frag_PosCol_Time.frag");
+	LinkProgram(m_programID);
 }
 
 void CMyApp::CleanShaders()
 {
-	glDeleteProgram( m_programID );
+	glDeleteProgram(m_programID);
 }
 
 bool CMyApp::Init()
@@ -62,7 +62,7 @@ void CMyApp::Clean()
 	CleanShaders();
 }
 
-void CMyApp::Update( const SUpdateInfo& updateInfo )
+void CMyApp::Update(const SUpdateInfo& updateInfo)
 {
 	m_ElapsedTimeInSec = updateInfo.ElapsedTimeInSec;
 }
@@ -74,21 +74,21 @@ void CMyApp::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// shader bekapcsolása 
-	glUseProgram( m_programID );
+	glUseProgram(m_programID);
 
 	// uniform átadása, a programnak aktívnak kell lennie! 
-	glUniform1f( glGetUniformLocation( m_programID, "ElapsedTimeInSec" ), m_ElapsedTimeInSec );
+	glUniform1f(glGetUniformLocation(m_programID, "ElapsedTimeInSec"), m_ElapsedTimeInSec);
 	// a location lekérdezésére az ul nevű segédfüggvényünk használható, később mindig így fog szerepelni 
 	// glUniform1f( ul( "ElapsedTimeInSec" ), m_ElapsedTimeInSec );
 
 	// kirajzolás:  https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml
-	glDrawArrays( GL_TRIANGLES,	// primitív típusa; amikkel mi foglalkozunk:  GL_POINTS, GL_LINE_STRIP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES
-				  0,			// ha van tároló amiben a kirajzolandó geometriák csúcspontjait tároljuk, akkor annak hányadik csúcspontjától rajzoljunk - most nincs ilyen, 
-								// csak arra használjuk, hogy a gl_VertexID számláló a shader-ben melyik számról induljon, azaz most nulláról
-				  6 );			// hány csúcspontot használjunk a primitívek kirajzolására - most: gl_VertexID számláló 0-tól indul és 5-ig megy, azaz összesen 6x fut le a vertex shader 
+	glDrawArrays(GL_TRIANGLES,	// primitív típusa; amikkel mi foglalkozunk:  GL_POINTS, GL_LINE_STRIP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES
+		0,			// ha van tároló amiben a kirajzolandó geometriák csúcspontjait tároljuk, akkor annak hányadik csúcspontjától rajzoljunk - most nincs ilyen, 
+		// csak arra használjuk, hogy a gl_VertexID számláló a shader-ben melyik számról induljon, azaz most nulláról
+		6);			// hány csúcspontot használjunk a primitívek kirajzolására - most: gl_VertexID számláló 0-tól indul és 5-ig megy, azaz összesen 6x fut le a vertex shader 
 
 	// shader kikapcsolása 
-	glUseProgram( 0 );
+	glUseProgram(0);
 }
 
 void CMyApp::RenderGUI()
@@ -102,7 +102,7 @@ void CMyApp::RenderGUI()
 // https://wiki.libsdl.org/SDL2/SDL_Keymod
 
 void CMyApp::KeyboardDown(const SDL_KeyboardEvent& key)
-{	
+{
 }
 
 void CMyApp::KeyboardUp(const SDL_KeyboardEvent& key)
@@ -142,7 +142,7 @@ void CMyApp::Resize(int _w, int _h)
 // Le nem kezelt, egzotikus esemény kezelése
 // https://wiki.libsdl.org/SDL2/SDL_Event
 
-void CMyApp::OtherEvent( const SDL_Event& ev )
+void CMyApp::OtherEvent(const SDL_Event& ev)
 {
 
 }

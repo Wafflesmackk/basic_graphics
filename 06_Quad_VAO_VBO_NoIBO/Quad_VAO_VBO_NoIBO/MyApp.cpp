@@ -1,5 +1,6 @@
 #include "MyApp.h"
 #include "SDL_GLDebugMessageCallback.h"
+#include <math.h>
 
 #include <imgui.h>
 
@@ -28,74 +29,122 @@ void CMyApp::SetupDebugCallback()
 void CMyApp::InitShaders()
 {
 	m_programID = glCreateProgram();
-	AttachShader( m_programID, GL_VERTEX_SHADER, "Shaders/Vert_PosCol_NoTransform.vert" );
-	AttachShader( m_programID, GL_FRAGMENT_SHADER, "Shaders/Frag_PosCol.frag" );
-	LinkProgram( m_programID );
+	AttachShader(m_programID, GL_VERTEX_SHADER, "Shaders/Vert_PosCol_NoTransform.vert");
+	AttachShader(m_programID, GL_FRAGMENT_SHADER, "Shaders/Frag_PosCol.frag");
+	LinkProgram(m_programID);
 }
 
 void CMyApp::CleanShaders()
 {
-	glDeleteProgram( m_programID );
+	glDeleteProgram(m_programID);
 }
 
 void CMyApp::InitGeometry()
 {
 	MeshObject<VertexPosColor> meshCPU;
+	float sqrt3halved = sqrt(3) / 2.0;
 
-	meshCPU.vertexArray = 
+	meshCPU.vertexArray =
 	{
-		{ glm::vec3( -1, -1, 0), glm::vec3(1, 0, 0) },
-		{ glm::vec3(  1, -1, 0), glm::vec3(0, 1, 0) },
-		{ glm::vec3( -1,  1, 0), glm::vec3(0, 0, 1) },
+		/*{glm::vec3(-1, -1, 0), glm::vec3(1, 0, 0)},
+		{ glm::vec3(1, -1, 0), glm::vec3(0, 1, 0) },
+		{ glm::vec3(-1,  1, 0), glm::vec3(0, 0, 1) },
 
-		{ glm::vec3( -1,  1, 0), glm::vec3(0, 0, 1) },
-		{ glm::vec3(  1, -1, 0), glm::vec3(0, 1, 0) },
-		{ glm::vec3(  1,  1, 0), glm::vec3(1, 1, 1) }
+		{ glm::vec3(-1,  1, 0), glm::vec3(0, 0, 1) },
+		{ glm::vec3(1, -1, 0), glm::vec3(0, 1, 0) },
+		{ glm::vec3(1,  1, 0), glm::vec3(1, 1, 1) }*/
+		//2 fel
+		/*{glm::vec3(-1, -1, 0), glm::vec3(1, 0, 0)},
+		{ glm::vec3(1, -1, 0), glm::vec3(0, 1, 0) },
+		{ glm::vec3(-1,  1, 0), glm::vec3(0, 0, 1) },
+		{ glm::vec3(1,  1, 0), glm::vec3(1, 1, 1) }*/
+
+		/*{glm::vec3(-0.875, -0.875, 0), glm::vec3(1, 0, 0)},
+		{ glm::vec3(-0.125, -0.875, 0), glm::vec3(0, 1, 0) },
+		{ glm::vec3(-0.875,  0.875, 0), glm::vec3(0, 0, 1) },
+
+		{ glm::vec3(-0.875,  0.875, 0), glm::vec3(0, 0, 1) },
+		{ glm::vec3(-0.125, -0.875, 0), glm::vec3(0, 1, 0) },
+		{ glm::vec3(-0.125, 0.875, 0), glm::vec3(1, 1, 1) },*/
+
+		/*{glm::vec3(-0.375, -0.975, 0.5), glm::vec3(1, 0, 0)},
+		{ glm::vec3(0.375, -0.975, 0.5), glm::vec3(0, 1, 0) },
+		{ glm::vec3(-0.375,  0.975, 0.5), glm::vec3(0, 0, 1) },
+
+		{ glm::vec3(-0375,  0.975, 0.5), glm::vec3(0, 0, 1) },
+		{ glm::vec3(-0.375, -0.975, 0.5), glm::vec3(0, 1, 0) },
+		{ glm::vec3(-0.375, 0.975, 0.5), glm::vec3(1, 1, 1) }*/
+
+		//3feladat:
+		{glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)},
+		{ glm::vec3(1, 0, 0), glm::vec3(1,0, 0) },
+		{ glm::vec3(0.5,  sqrt3halved, 0), glm::vec3(1, 1, 0) },
+		{ glm::vec3(-0.5,  sqrt3halved, 0), glm::vec3(0, 1, 0) },
+		{ glm::vec3(-1,  0, 0), glm::vec3(0, 1, 1) },
+		{ glm::vec3(-0.5,  -sqrt3halved, 0), glm::vec3(0, 0, 1) },
+		{ glm::vec3(0.5,  -sqrt3halved, 0), glm::vec3(1, 0, 1) },
+
+		//4feladat
 	};
 
-
+	meshCPU.indexArray = {
+		0,1,2,
+		0,2,3,
+		0,3,4,
+		0,4,5,
+		0,5,6,
+		0,6,1
+	};
 	// hozzunk létre 1 új VBO erőforrás nevet
 	glCreateBuffers(1, &vboID);
 
 	// töltsük fel adatokkal a VBO-t
 	glNamedBufferData(vboID,	// a VBO-ba töltsünk adatokat 
-						meshCPU.vertexArray.size() * sizeof(VertexPosColor),	// ennyi bájt nagyságban 
-						meshCPU.vertexArray.data(),	// erről a rendszermemóriabeli címről olvasva 
-						GL_STATIC_DRAW);	// úgy, hogy a VBO-nkba nem tervezünk ezután írni és minden kirajzoláskor felhasználjuk a benne lévő adatokat 
+		meshCPU.vertexArray.size() * sizeof(VertexPosColor),	// ennyi bájt nagyságban 
+		meshCPU.vertexArray.data(),	// erről a rendszermemóriabeli címről olvasva 
+		GL_STATIC_DRAW);	// úgy, hogy a VBO-nkba nem tervezünk ezután írni és minden kirajzoláskor felhasználjuk a benne lévő adatokat 
 
-	count = static_cast<GLsizei>( meshCPU.vertexArray.size() );
+	glCreateBuffers(1, &iboID);
+	glNamedBufferData(iboID, meshCPU.indexArray.size() * sizeof(GLuint), meshCPU.indexArray.data(), GL_STATIC_DRAW);
+
+	//count = static_cast<GLsizei>(meshCPU.vertexArray.size());
+
+	count = static_cast<GLsizei>(meshCPU.indexArray.size());
 
 
 	// 1 db VAO foglalása 
 	glCreateVertexArrays(1, &vaoID);
 
 	// VBO beállítása a VAO-hoz, 0. indexen 
-	glVertexArrayVertexBuffer( vaoID, 0, vboID, 0, sizeof( VertexPosColor ) );
+	glVertexArrayVertexBuffer(vaoID, 0, vboID, 0, sizeof(VertexPosColor));
 
 
 	// attribútumok beallitasa
-	
+
 	// 0-as indexű attribútum: pozíció
-	glEnableVertexArrayAttrib( vaoID, 0 );		// engedélyezzük az attribútumot 
-	glVertexArrayAttribBinding( vaoID, 0, 0 );	// az attribútumot a 0. indexű VBO-hoz kötjük 
-	glVertexArrayAttribFormat( vaoID,			// a VAO-hoz tartozó attribútumokat állítjuk be 
-								0,			// a 0. indexű attribútum 
-								3,			// 3 komponens (x, y, z) 
-								GL_FLOAT,	// az adatok típusa 
-								GL_FALSE,	// az adatok normalizálva vannak-e 
-								offsetof( VertexPosColor, position ) // az attribútum hol kezdődik a sizeof(Vertex)-nyi területen belül 
+	glEnableVertexArrayAttrib(vaoID, 0);		// engedélyezzük az attribútumot 
+	glVertexArrayAttribBinding(vaoID, 0, 0);	// az attribútumot a 0. indexű VBO-hoz kötjük 
+	glVertexArrayAttribFormat(vaoID,			// a VAO-hoz tartozó attribútumokat állítjuk be 
+		0,			// a 0. indexű attribútum 
+		3,			// 3 komponens (x, y, z) 
+		GL_FLOAT,	// az adatok típusa 
+		GL_FALSE,	// az adatok normalizálva vannak-e 
+		offsetof(VertexPosColor, position) // az attribútum hol kezdődik a sizeof(Vertex)-nyi területen belül 
 	);
 
 	// 1-es indexű attribútum: szín
-	glEnableVertexArrayAttrib( vaoID, 1 );
-	glVertexArrayAttribBinding( vaoID, 1, 0 );
-	glVertexArrayAttribFormat( vaoID, 1, 3, GL_FLOAT, GL_FALSE, offsetof( VertexPosColor, color ) );
+	glEnableVertexArrayAttrib(vaoID, 1);
+	glVertexArrayAttribBinding(vaoID, 1, 0);
+	glVertexArrayAttribFormat(vaoID, 1, 3, GL_FLOAT, GL_FALSE, offsetof(VertexPosColor, color));
+
+	glVertexArrayElementBuffer(vaoID, iboID);
 }
 
 void CMyApp::CleanGeometry()
 {
-	glDeleteBuffers(1,      &vboID);
+	glDeleteBuffers(1, &vboID);
 	glDeleteVertexArrays(1, &vaoID);
+	glDeleteBuffers(1, &vboID);
 }
 
 bool CMyApp::Init()
@@ -124,7 +173,7 @@ void CMyApp::Clean()
 	CleanGeometry();
 }
 
-void CMyApp::Update( const SUpdateInfo& updateInfo )
+void CMyApp::Update(const SUpdateInfo& updateInfo)
 {
 	m_ElapsedTimeInSec = updateInfo.ElapsedTimeInSec;
 }
@@ -136,21 +185,22 @@ void CMyApp::Render()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	// - VAO beállítása 
-	glBindVertexArray( vaoID );
+	glBindVertexArray(vaoID);
 
 	// shader bekapcsolása 
-	glUseProgram( m_programID );
+	glUseProgram(m_programID);
 
-	// kirajzolás:  https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml
-	glDrawArrays( GL_TRIANGLES,		// primitív típusa; amikkel mi foglalkozunk:  GL_POINTS, GL_LINE_STRIP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES
-					0,				// melyik vertex az első 
-					count );		// hány csúcspontot használjunk a primitívek kirajzolására 
+	/*// kirajzolás:  https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glDrawArrays.xhtml
+	glDrawArrays(GL_TRIANGLES,		// primitív típusa; amikkel mi foglalkozunk:  GL_POINTS, GL_LINE_STRIP, GL_LINES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN, GL_TRIANGLES
+		0,				// melyik vertex az első
+		count);		// hány csúcspontot használjunk a primitívek kirajzolására */
 
+	glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 	// shader kikapcsolása 
-	glUseProgram( 0 );
+	glUseProgram(0);
 
 	// VAO kikapcsolása 
-	glBindVertexArray( 0 );
+	glBindVertexArray(0);
 }
 
 void CMyApp::RenderGUI()
@@ -164,22 +214,22 @@ void CMyApp::RenderGUI()
 // https://wiki.libsdl.org/SDL2/SDL_Keymod
 
 void CMyApp::KeyboardDown(const SDL_KeyboardEvent& key)
-{	
-	if ( key.repeat == 0 ) // Először lett megnyomva 
+{
+	if (key.repeat == 0) // Először lett megnyomva 
 	{
-		if ( key.keysym.sym == SDLK_F5 && key.keysym.mod & KMOD_CTRL )
+		if (key.keysym.sym == SDLK_F5 && key.keysym.mod & KMOD_CTRL)
 		{
 			CleanShaders();
 			InitShaders();
 		}
-		if ( key.keysym.sym == SDLK_F1 )
+		if (key.keysym.sym == SDLK_F1)
 		{
-			GLint polygonModeFrontAndBack[ 2 ] = {};
+			GLint polygonModeFrontAndBack[2] = {};
 			// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGet.xhtml
-			glGetIntegerv( GL_POLYGON_MODE, polygonModeFrontAndBack ); // Kérdezzük le a jelenlegi polygon módot! Külön adja a front és back módokat. 
-			GLenum polygonMode = ( polygonModeFrontAndBack[ 0 ] != GL_FILL ? GL_FILL : GL_LINE ); // Váltogassuk FILL és LINE között! 
+			glGetIntegerv(GL_POLYGON_MODE, polygonModeFrontAndBack); // Kérdezzük le a jelenlegi polygon módot! Külön adja a front és back módokat. 
+			GLenum polygonMode = (polygonModeFrontAndBack[0] != GL_FILL ? GL_FILL : GL_LINE); // Váltogassuk FILL és LINE között! 
 			// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glPolygonMode.xhtml
-			glPolygonMode( GL_FRONT_AND_BACK, polygonMode ); // Állítsuk be az újat! 
+			glPolygonMode(GL_FRONT_AND_BACK, polygonMode); // Állítsuk be az újat! 
 		}
 	}
 }

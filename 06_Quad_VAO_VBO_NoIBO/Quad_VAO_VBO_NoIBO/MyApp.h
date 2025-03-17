@@ -18,7 +18,7 @@
 struct SUpdateInfo
 {
 	float ElapsedTimeInSec = 0.0f; // Program indulása óta eltelt idő 
-	float DeltaTimeInSec	 = 0.0f; // Előző Update óta eltelt idő 
+	float DeltaTimeInSec = 0.0f; // Előző Update óta eltelt idő 
 };
 
 class CMyApp
@@ -30,7 +30,7 @@ public:
 	bool Init();
 	void Clean();
 
-	void Update( const SUpdateInfo& );
+	void Update(const SUpdateInfo&);
 	void Render();
 	void RenderGUI();
 
@@ -42,7 +42,7 @@ public:
 	void MouseWheel(const SDL_MouseWheelEvent&);
 	void Resize(int, int);
 
-	void OtherEvent( const SDL_Event& );
+	void OtherEvent(const SDL_Event&);
 protected:
 	void SetupDebugCallback();
 
@@ -51,7 +51,7 @@ protected:
 	float m_ElapsedTimeInSec = 0.0f;
 
 	// OpenGL-es dolgok
-	
+
 	// Shaderekhez szükséges változók 
 	GLuint m_programID = 0; // shaderek programja 
 
@@ -63,6 +63,7 @@ protected:
 
 	GLuint  vaoID = 0; // Vertex Array Object erőforrás azonosító 
 	GLuint  vboID = 0; // Vertex Buffer Object erőforrás azonosító 
+	GLuint  iboID = 0;
 
 	GLsizei count = 0; // mennyi indexet/vertexet kell rajzolnunk 
 

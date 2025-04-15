@@ -29,14 +29,14 @@ void CMyApp::SetupDebugCallback()
 void CMyApp::InitShaders()
 {
 	m_programID = glCreateProgram();
-	AttachShader( m_programID, GL_VERTEX_SHADER, "Shaders/Vert_PosNormTex.vert" );
-	AttachShader( m_programID, GL_FRAGMENT_SHADER, "Shaders/Frag_LightingSkeleton.frag" );
-	LinkProgram( m_programID );
+	AttachShader(m_programID, GL_VERTEX_SHADER, "Shaders/Vert_PosNormTex.vert");
+	AttachShader(m_programID, GL_FRAGMENT_SHADER, "Shaders/Frag_LightingSkeleton.frag");
+	LinkProgram(m_programID);
 }
 
 void CMyApp::CleanShaders()
 {
-	glDeleteProgram( m_programID );
+	glDeleteProgram(m_programID);
 }
 
 void CMyApp::InitGeometry()
@@ -44,21 +44,21 @@ void CMyApp::InitGeometry()
 
 	const std::initializer_list<VertexAttributeDescriptor> vertexAttribList =
 	{
-		{ 0, offsetof( Vertex, position ), 3, GL_FLOAT },
-		{ 1, offsetof( Vertex, normal   ), 3, GL_FLOAT },
-		{ 2, offsetof( Vertex, texcoord ), 2, GL_FLOAT },
+		{ 0, offsetof(Vertex, position), 3, GL_FLOAT },
+		{ 1, offsetof(Vertex, normal), 3, GL_FLOAT },
+		{ 2, offsetof(Vertex, texcoord), 2, GL_FLOAT },
 	};
 
 	// Quad 
 
 	MeshObject<Vertex> quadMeshCPU;
 
-	quadMeshCPU.vertexArray = 
+	quadMeshCPU.vertexArray =
 	{
-		{ glm::vec3( -1, -1, 0 ),glm::vec3( 0.0, 0.0, 1.0 ), glm::vec2( 0.0, 0.0 ) },
-		{ glm::vec3(  1, -1, 0 ),glm::vec3( 0.0, 0.0, 1.0 ), glm::vec2( 1.0, 0.0 ) },
-		{ glm::vec3( -1,  1, 0 ),glm::vec3( 0.0, 0.0, 1.0 ), glm::vec2( 0.0, 1.0 ) },
-		{ glm::vec3(  1,  1, 0 ),glm::vec3( 0.0, 0.0, 1.0 ), glm::vec2( 1.0, 1.0 ) }
+		{ glm::vec3(-1, -1, 0),glm::vec3(0.0, 0.0, 1.0), glm::vec2(0.0, 0.0) },
+		{ glm::vec3(1, -1, 0),glm::vec3(0.0, 0.0, 1.0), glm::vec2(1.0, 0.0) },
+		{ glm::vec3(-1,  1, 0),glm::vec3(0.0, 0.0, 1.0), glm::vec2(0.0, 1.0) },
+		{ glm::vec3(1,  1, 0),glm::vec3(0.0, 0.0, 1.0), glm::vec2(1.0, 1.0) }
 	};
 
 	quadMeshCPU.indexArray =
@@ -67,69 +67,69 @@ void CMyApp::InitGeometry()
 		1, 3, 2
 	};
 
-	m_quadGPU = CreateGLObjectFromMesh( quadMeshCPU, vertexAttribList );
+	m_quadGPU = CreateGLObjectFromMesh(quadMeshCPU, vertexAttribList);
 
 	// Suzanne
 
 	MeshObject<Vertex> suzanneMeshCPU = ObjParser::parse("Assets/Suzanne.obj");
 
-	m_SuzanneGPU = CreateGLObjectFromMesh( suzanneMeshCPU, vertexAttribList );
+	m_SuzanneGPU = CreateGLObjectFromMesh(suzanneMeshCPU, vertexAttribList);
 
 	// Gömb 
 
 	MeshObject<Vertex> sphereMeshCPU = ObjParser::parse("Assets/MarbleBall.obj");
 
-	m_sphereGPU = CreateGLObjectFromMesh( sphereMeshCPU, vertexAttribList );
+	m_sphereGPU = CreateGLObjectFromMesh(sphereMeshCPU, vertexAttribList);
 }
 
 void CMyApp::CleanGeometry()
 {
-	CleanOGLObject( m_quadGPU );
-	CleanOGLObject( m_SuzanneGPU );
-	CleanOGLObject( m_sphereGPU );
+	CleanOGLObject(m_quadGPU);
+	CleanOGLObject(m_SuzanneGPU);
+	CleanOGLObject(m_sphereGPU);
 }
 
 void CMyApp::InitTextures()
 {
-	glCreateSamplers( 1, &m_SamplerID );
-	glSamplerParameteri( m_SamplerID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
-	glSamplerParameteri( m_SamplerID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
-	glSamplerParameteri( m_SamplerID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-	glSamplerParameteri( m_SamplerID, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+	glCreateSamplers(1, &m_SamplerID);
+	glSamplerParameteri(m_SamplerID, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glSamplerParameteri(m_SamplerID, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+	glSamplerParameteri(m_SamplerID, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+	glSamplerParameteri(m_SamplerID, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	// diffúz textúra 
-	ImageRGBA woodImage = ImageFromFile( "Assets/Wood_Table_Texture.png" );
+	ImageRGBA woodImage = ImageFromFile("Assets/Wood_Table_Texture.png");
 
-	glCreateTextures( GL_TEXTURE_2D, 1, &m_woodTextureID );
-	glTextureStorage2D( m_woodTextureID, NumberOfMIPLevels( woodImage ), GL_RGBA8, woodImage.width, woodImage.height );
-	glTextureSubImage2D( m_woodTextureID, 0, 0, 0, woodImage.width, woodImage.height, GL_RGBA, GL_UNSIGNED_BYTE, woodImage.data() );
+	glCreateTextures(GL_TEXTURE_2D, 1, &m_woodTextureID);
+	glTextureStorage2D(m_woodTextureID, NumberOfMIPLevels(woodImage), GL_RGBA8, woodImage.width, woodImage.height);
+	glTextureSubImage2D(m_woodTextureID, 0, 0, 0, woodImage.width, woodImage.height, GL_RGBA, GL_UNSIGNED_BYTE, woodImage.data());
 
-	glGenerateTextureMipmap( m_woodTextureID );
+	glGenerateTextureMipmap(m_woodTextureID);
 
-	ImageRGBA SuzanneImage = ImageFromFile( "Assets/wood.jpg" );
+	ImageRGBA SuzanneImage = ImageFromFile("Assets/wood.jpg");
 
-	glCreateTextures( GL_TEXTURE_2D, 1, &m_SuzanneTextureID );
-	glTextureStorage2D( m_SuzanneTextureID, NumberOfMIPLevels( SuzanneImage ), GL_RGBA8, SuzanneImage.width, SuzanneImage.height );
-	glTextureSubImage2D( m_SuzanneTextureID, 0, 0, 0, SuzanneImage.width, SuzanneImage.height, GL_RGBA, GL_UNSIGNED_BYTE, SuzanneImage.data() );
+	glCreateTextures(GL_TEXTURE_2D, 1, &m_SuzanneTextureID);
+	glTextureStorage2D(m_SuzanneTextureID, NumberOfMIPLevels(SuzanneImage), GL_RGBA8, SuzanneImage.width, SuzanneImage.height);
+	glTextureSubImage2D(m_SuzanneTextureID, 0, 0, 0, SuzanneImage.width, SuzanneImage.height, GL_RGBA, GL_UNSIGNED_BYTE, SuzanneImage.data());
 
-	glGenerateTextureMipmap( m_SuzanneTextureID );
+	glGenerateTextureMipmap(m_SuzanneTextureID);
 
-	ImageRGBA sphereImage = ImageFromFile( "Assets/MarbleBall.png" );
+	ImageRGBA sphereImage = ImageFromFile("Assets/MarbleBall.png");
 
-	glCreateTextures( GL_TEXTURE_2D, 1, &m_sphereTextureID );
-	glTextureStorage2D( m_sphereTextureID, NumberOfMIPLevels( sphereImage ), GL_RGBA8, sphereImage.width, sphereImage.height );
-	glTextureSubImage2D( m_sphereTextureID, 0, 0, 0, sphereImage.width, sphereImage.height, GL_RGBA, GL_UNSIGNED_BYTE, sphereImage.data() );
+	glCreateTextures(GL_TEXTURE_2D, 1, &m_sphereTextureID);
+	glTextureStorage2D(m_sphereTextureID, NumberOfMIPLevels(sphereImage), GL_RGBA8, sphereImage.width, sphereImage.height);
+	glTextureSubImage2D(m_sphereTextureID, 0, 0, 0, sphereImage.width, sphereImage.height, GL_RGBA, GL_UNSIGNED_BYTE, sphereImage.data());
 
-	glGenerateTextureMipmap( m_sphereTextureID );
+	glGenerateTextureMipmap(m_sphereTextureID);
 }
 
 void CMyApp::CleanTextures()
 {
-	glDeleteTextures( 1, &m_woodTextureID );
-	glDeleteTextures( 1, &m_SuzanneTextureID );
-	glDeleteTextures( 1, &m_sphereTextureID );
+	glDeleteTextures(1, &m_woodTextureID);
+	glDeleteTextures(1, &m_SuzanneTextureID);
+	glDeleteTextures(1, &m_sphereTextureID);
 
-	glDeleteSamplers( 1, &m_SamplerID );
+	glDeleteSamplers(1, &m_SamplerID);
 }
 
 bool CMyApp::Init()
@@ -156,7 +156,7 @@ bool CMyApp::Init()
 		glm::vec3(0.0, 0.0, 0.0),   // a színtér melyik pontját nézzük  - at
 		glm::vec3(0.0, 1.0, 0.0));  // felfelé mutató irány a világban  - up
 
-	m_cameraManipulator.SetCamera( &m_camera );
+	m_cameraManipulator.SetCamera(&m_camera);
 
 	return true;
 }
@@ -168,32 +168,53 @@ void CMyApp::Clean()
 	CleanTextures();
 }
 
-void CMyApp::Update( const SUpdateInfo& updateInfo )
+void CMyApp::Update(const SUpdateInfo& updateInfo)
 {
 	m_ElapsedTimeInSec = updateInfo.ElapsedTimeInSec;
 
-	m_cameraManipulator.Update( updateInfo.DeltaTimeInSec );
+	m_cameraManipulator.Update(updateInfo.DeltaTimeInSec);
 
 	// világ transzformációk 
 
-	m_tableWorldTransform = glm::translate( TABLE_POS ) 
-		* glm::rotate( glm::half_pi<float>(), glm::vec3( -1.0f,0.0,0.0) )
-		* glm::scale( glm::vec3( TABLE_SIZE ) );
+	m_tableWorldTransform = glm::translate(TABLE_POS)
+		* glm::rotate(glm::half_pi<float>(), glm::vec3(-1.0f, 0.0, 0.0))
+		* glm::scale(glm::vec3(TABLE_SIZE));
 
-	m_sphereWorldTransform = glm::translate( SPHERE_POS );
+	m_sphereWorldTransform = glm::translate(SPHERE_POS);
 
-	m_SuzanneWorldTransform = glm::translate( SUZANNE_POS );
+	m_SuzanneWorldTransform = glm::translate(SUZANNE_POS);
+
+	if (m_IsLampOn) {
+		glClearColor(0.125f, 0.25f, 0.5f, 1.0f);
+		m_La = glm::vec3(0.125);
+		m_Ld = m_Ls = glm::vec3(1.0f);
+
+		m_lightPosition = glm::vec4(m_lampPos, 0.0);
+	}
+	else {
+		glClearColor(0, 0, 0, 0);
+		m_La = glm::vec3(0.0125);
+		m_Ld = m_Ls = BUG_COLOR;
+		m_lightPosition = glm::vec4(m_bugPos, 1.0); //itt már konkrét position
+	}
 }
 
 void CMyApp::SetCommonUniforms()
 {
 	// view és projekciós mátrix 
-	glUniformMatrix4fv( ul("viewProj"), 1, GL_FALSE, glm::value_ptr( m_camera.GetViewProj() ) );
+	glUniformMatrix4fv(ul("viewProj"), 1, GL_FALSE, glm::value_ptr(m_camera.GetViewProj()));
+
+	glUniform3fv(ul("cameraPosition"), 1, glm::value_ptr(m_camera.GetEye()));
+	glUniform4fv(ul("lightPosition"), 1, glm::value_ptr(m_lightPosition));
+
+	glUniform3fv(ul("La"), 1, glm::value_ptr(m_La));
+	glUniform3fv(ul("Ld"), 1, glm::value_ptr(m_Ld));
+	glUniform3fv(ul("Ls"), 1, glm::value_ptr(m_Ls));
 }
 
 void CMyApp::DrawObject(OGLObject& obj, const glm::mat4& world) {
-	glUniformMatrix4fv( ul("world"), 1, GL_FALSE, glm::value_ptr(world));
-	glUniformMatrix4fv( ul("worldInvTransp"), 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(world))));
+	glUniformMatrix4fv(ul("world"), 1, GL_FALSE, glm::value_ptr(world));
+	glUniformMatrix4fv(ul("worldInvTransp"), 1, GL_FALSE, glm::value_ptr(glm::transpose(glm::inverse(world))));
 	glBindVertexArray(obj.vaoID);
 	glDrawElements(GL_TRIANGLES, obj.count, GL_UNSIGNED_INT, nullptr);
 }
@@ -201,38 +222,49 @@ void CMyApp::DrawObject(OGLObject& obj, const glm::mat4& world) {
 void CMyApp::RenderTable()
 {
 	// - textúraegységek beállítása 
-	glUniform1i( ul("textureImage"), 0 );
+	glUniform1i(ul("textureImage"), 0);
 
 	// - Textúrák beállítása, minden egységre külön 
-	glBindTextureUnit( 0, m_woodTextureID );
-	glBindSampler( 0, m_SamplerID );
+	glBindTextureUnit(0, m_woodTextureID);
+	glBindSampler(0, m_SamplerID);
 
-	DrawObject( m_quadGPU, m_tableWorldTransform );
+	glUniform3fv(ul("Ka"), 1, glm::value_ptr(m_Ka)); //anyag tulajdonság
+	glUniform3fv(ul("Kd"), 1, glm::value_ptr(m_Kd));
+	glUniform3fv(ul("Ks"), 1, glm::value_ptr(m_Ks));
+
+	DrawObject(m_quadGPU, m_tableWorldTransform);
 }
 
 void CMyApp::RenderBall()
 {
 	// - textúraegységek beállítása 
-	glUniform1i( ul("textureImage"), 0 );
+	glUniform1i(ul("textureImage"), 0);
 
 	// - Textúrák beállítása, minden egységre külön 
-	glBindTextureUnit( 0, m_sphereTextureID );
-	glBindSampler( 0, m_SamplerID );
+	glBindTextureUnit(0, m_sphereTextureID);
+	glBindSampler(0, m_SamplerID);
 
+	glUniform3fv(ul("Ka"), 1, glm::value_ptr(m_Ka));
+	glUniform3fv(ul("Kd"), 1, glm::value_ptr(m_Kd));
+	glUniform3fv(ul("Ks"), 1, glm::value_ptr(m_Ks));
 
-	DrawObject( m_sphereGPU, m_sphereWorldTransform );
+	DrawObject(m_sphereGPU, m_sphereWorldTransform);
 }
 
 void CMyApp::RenderSuzanne()
 {
 	// - textúraegységek beállítása 
-	glUniform1i( ul("textureImage"), 0 );
+	glUniform1i(ul("textureImage"), 0);
 
 	// - Textúrák beállítása, minden egységre külön 
-	glBindTextureUnit( 0, m_SuzanneTextureID );
-	glBindSampler( 0, m_SamplerID );
+	glBindTextureUnit(0, m_SuzanneTextureID);
+	glBindSampler(0, m_SamplerID);
 
-	DrawObject( m_SuzanneGPU, m_SuzanneWorldTransform );
+	glUniform3fv(ul("Ka"), 1, glm::value_ptr(m_Ka));
+	glUniform3fv(ul("Kd"), 1, glm::value_ptr(m_Kd));
+	glUniform3fv(ul("Ks"), 1, glm::value_ptr(m_Ks));
+
+	DrawObject(m_SuzanneGPU, m_SuzanneWorldTransform);
 }
 
 void CMyApp::Render()
@@ -241,7 +273,7 @@ void CMyApp::Render()
 	// ... és a mélységi Z puffert (GL_DEPTH_BUFFER_BIT)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glUseProgram( m_programID );
+	glUseProgram(m_programID);
 
 	SetCommonUniforms();
 
@@ -250,20 +282,22 @@ void CMyApp::Render()
 	RenderSuzanne();
 
 	// shader kikapcsolása 
-	glUseProgram( 0 );
+	glUseProgram(0);
 
 	// - Textúrák kikapcsolása, minden egységre külön 
-	glBindTextureUnit( 0, 0 );
-	glBindSampler( 0, 0 );
+	glBindTextureUnit(0, 0);
+	glBindSampler(0, 0);
 
 
 	// VAO kikapcsolása 
-	glBindVertexArray( 0 );
+	glBindVertexArray(0);
 }
 
 void CMyApp::RenderGUI()
 {
 	// ImGui::ShowDemoWindow();
+	ImGui::Checkbox("Is lamp on", &m_IsLampOn);
+	ImGui::SliderFloat3("bug", glm::value_ptr(m_bugPos), -5.0, 5.0);
 }
 
 // https://wiki.libsdl.org/SDL2/SDL_KeyboardEvent
@@ -272,37 +306,37 @@ void CMyApp::RenderGUI()
 // https://wiki.libsdl.org/SDL2/SDL_Keymod
 
 void CMyApp::KeyboardDown(const SDL_KeyboardEvent& key)
-{	
-	if ( key.repeat == 0 ) // Először lett megnyomva 
+{
+	if (key.repeat == 0) // Először lett megnyomva 
 	{
-		if ( key.keysym.sym == SDLK_F5 && key.keysym.mod & KMOD_CTRL )
+		if (key.keysym.sym == SDLK_F5 && key.keysym.mod & KMOD_CTRL)
 		{
 			CleanShaders();
 			InitShaders();
 		}
-		if ( key.keysym.sym == SDLK_F1 )
+		if (key.keysym.sym == SDLK_F1)
 		{
-			GLint polygonModeFrontAndBack[ 2 ] = {};
+			GLint polygonModeFrontAndBack[2] = {};
 			// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glGet.xhtml
-			glGetIntegerv( GL_POLYGON_MODE, polygonModeFrontAndBack ); // Kérdezzük le a jelenlegi polygon módot! Külön adja a front és back módokat. 
-			GLenum polygonMode = ( polygonModeFrontAndBack[ 0 ] != GL_FILL ? GL_FILL : GL_LINE ); // Váltogassuk FILL és LINE között! 
+			glGetIntegerv(GL_POLYGON_MODE, polygonModeFrontAndBack); // Kérdezzük le a jelenlegi polygon módot! Külön adja a front és back módokat. 
+			GLenum polygonMode = (polygonModeFrontAndBack[0] != GL_FILL ? GL_FILL : GL_LINE); // Váltogassuk FILL és LINE között! 
 			// https://registry.khronos.org/OpenGL-Refpages/gl4/html/glPolygonMode.xhtml
-			glPolygonMode( GL_FRONT_AND_BACK, polygonMode ); // Állítsuk be az újat! 
+			glPolygonMode(GL_FRONT_AND_BACK, polygonMode); // Állítsuk be az újat! 
 		}
 	}
-	m_cameraManipulator.KeyboardDown( key );
+	m_cameraManipulator.KeyboardDown(key);
 }
 
 void CMyApp::KeyboardUp(const SDL_KeyboardEvent& key)
 {
-	m_cameraManipulator.KeyboardUp( key );
+	m_cameraManipulator.KeyboardUp(key);
 }
 
 // https://wiki.libsdl.org/SDL2/SDL_MouseMotionEvent
 
 void CMyApp::MouseMove(const SDL_MouseMotionEvent& mouse)
 {
-	m_cameraManipulator.MouseMove( mouse );
+	m_cameraManipulator.MouseMove(mouse);
 }
 
 // https://wiki.libsdl.org/SDL2/SDL_MouseButtonEvent
@@ -319,7 +353,7 @@ void CMyApp::MouseUp(const SDL_MouseButtonEvent& mouse)
 
 void CMyApp::MouseWheel(const SDL_MouseWheelEvent& wheel)
 {
-	m_cameraManipulator.MouseWheel( wheel );
+	m_cameraManipulator.MouseWheel(wheel);
 }
 
 
@@ -327,13 +361,13 @@ void CMyApp::MouseWheel(const SDL_MouseWheelEvent& wheel)
 void CMyApp::Resize(int _w, int _h)
 {
 	glViewport(0, 0, _w, _h);
-	m_camera.SetAspect( static_cast<float>(_w) / _h );
+	m_camera.SetAspect(static_cast<float>(_w) / _h);
 }
 
 // Le nem kezelt, egzotikus esemény kezelése
 // https://wiki.libsdl.org/SDL2/SDL_Event
 
-void CMyApp::OtherEvent( const SDL_Event& ev )
+void CMyApp::OtherEvent(const SDL_Event& ev)
 {
 
 }

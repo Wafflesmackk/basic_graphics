@@ -20,7 +20,7 @@
 struct SUpdateInfo
 {
 	float ElapsedTimeInSec = 0.0f; // Program indulása óta eltelt idő 
-	float DeltaTimeInSec   = 0.0f; // Előző Update óta eltelt idő 
+	float DeltaTimeInSec = 0.0f; // Előző Update óta eltelt idő 
 };
 
 class CMyApp
@@ -32,7 +32,7 @@ public:
 	bool Init();
 	void Clean();
 
-	void Update( const SUpdateInfo& );
+	void Update(const SUpdateInfo&);
 	void Render();
 	void RenderGUI();
 
@@ -44,7 +44,7 @@ public:
 	void MouseWheel(const SDL_MouseWheelEvent&);
 	void Resize(int, int);
 
-	void OtherEvent( const SDL_Event& );
+	void OtherEvent(const SDL_Event&);
 protected:
 	void SetupDebugCallback();
 
@@ -58,18 +58,26 @@ protected:
 	glm::mat4 m_sphereWorldTransform;
 	glm::mat4 m_SuzanneWorldTransform;
 
+	//Lamp
+
+	glm::vec3 m_lampPos = glm::vec3(0.0, 1.0, 0.0);
+
+	//Bogár
+	glm::vec3 m_bugPos = glm::vec3(0.0, 1.0, 0.0);
+
+
 	// Asztal paraméterek 
 
 	static constexpr float     TABLE_SIZE = 5.0f;
-	static constexpr glm::vec3 TABLE_POS = glm::vec3( 0.0f, 0.0f, 0.0f );
+	static constexpr glm::vec3 TABLE_POS = glm::vec3(0.0f, 0.0f, 0.0f);
 
 	// Suzanne paraméterek 
 
-	static constexpr glm::vec3 SUZANNE_POS = glm::vec3( 2.0f, 1.0f, 2.0f );
+	static constexpr glm::vec3 SUZANNE_POS = glm::vec3(2.0f, 1.0f, 2.0f);
 
 	// Gömb paraméterek 
 
-	static constexpr glm::vec3 SPHERE_POS = glm::vec3( -2.0f, 1.0f, -2.0f );
+	static constexpr glm::vec3 SPHERE_POS = glm::vec3(-2.0f, 1.0f, -2.0f);
 
 	// Kamera 
 	Camera m_camera;
@@ -77,7 +85,7 @@ protected:
 
 	// Fényforrások 
 
-	// static constexpr glm::vec3 BUG_COLOR = glm::vec3( 0.53f, 1.0f, 0.3f );
+	static constexpr glm::vec3 BUG_COLOR = glm::vec3(0.53f, 1.0f, 0.3f);
 
 	// OpenGL-es dolgok
 
@@ -85,20 +93,21 @@ protected:
 	GLuint m_programID = 0; // shaderek programja 
 
 	// Fényforrás - ...
-	// glm::vec4 m_lightPosition = glm::vec4( 0.0f, 1.0f, 0.0f, 0.0f );
+	glm::vec4 m_lightPosition = glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 
-	// glm::vec3 m_La = glm::vec3(0.0, 0.0, 0.0 );
-	// glm::vec3 m_Ld = glm::vec3(1.0, 1.0, 1.0 );
-	// glm::vec3 m_Ls = glm::vec3(1.0, 1.0, 1.0 );
+	glm::vec3 m_La = glm::vec3(0.0, 0.0, 0.0); //ambient
+	glm::vec3 m_Ld = glm::vec3(1.0, 1.0, 1.0); //diffúz szín
+	glm::vec3 m_Ls = glm::vec3(1.0, 1.0, 1.0); //csillanás
 
-	// float m_lightConstantAttenuation    = 1.0;
-	// float m_lightLinearAttenuation      = 0.0;
-	// float m_lightQuadraticAttenuation   = 0.0;
+	//négyzetes fény csillapodáshoz
+	float m_lightConstantAttenuation = 1.0;
+	float m_lightLinearAttenuation = 0.0;
+	float m_lightQuadraticAttenuation = 0.0;
 
 	// ...  és anyagjellemzők 
-	// glm::vec3 m_Ka = glm::vec3( 1.0 );
-	// glm::vec3 m_Kd = glm::vec3( 1.0 );
-	// glm::vec3 m_Ks = glm::vec3( 1.0 );
+	glm::vec3 m_Ka = glm::vec3(1.0); //visszaverés
+	glm::vec3 m_Kd = glm::vec3(1.0); //diffúz színre
+	glm::vec3 m_Ks = glm::vec3(1.0);
 
 	// float m_Shininess = 20.0;
 
@@ -117,7 +126,7 @@ protected:
 	void CleanGeometry();
 
 	// Textúrázás, és változói 
-    GLuint m_SamplerID = 0;
+	GLuint m_SamplerID = 0;
 
 	GLuint m_woodTextureID = 0;
 	GLuint m_SuzanneTextureID = 0;

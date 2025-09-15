@@ -47,36 +47,31 @@ void CMyApp::InitGeometry()
 
 	std::vector<glm::vec3> baseVertices;
 
-	const int N = 8; // szabályos nyolcszög
-	const float a = 0.5f; // élhossz
-	const float height = 0.5f; // hasáb magasság fele
-	const float r = a / (2.0f * sin(glm::pi<float>() / N)); // külső sugár
+	const int N = 8;
+	const float a = 0.5f;
+	const float height = 0.5f;
+	const float r = a / (2.0f * sin(glm::pi<float>() / N));
 
-	// Alap + tető pontjai (2x8)
 	for (int i = 0; i < N; ++i)
 	{
 		float angle = 2.0f * glm::pi<float>() * i / N;
 		float x = r * cos(angle);
 		float z = r * sin(angle);
 
-		// alsó pont
-		meshCPU.vertexArray.push_back({ glm::vec3(x, -height / 2.0f, z), glm::vec3(0.7f, 0.2f, 0.2f) });
+		meshCPU.vertexArray.push_back({ glm::vec3(x, -height / 2.0f, z), glm::vec3(1.0f) });
 
-		// felső pont
-		meshCPU.vertexArray.push_back({ glm::vec3(x, +height / 2.0f, z), glm::vec3(0.2f, 0.7f, 0.2f) });
+		meshCPU.vertexArray.push_back({ glm::vec3(x, +height / 2.0f, z), glm::vec3(1.0f) });
 	}
 
-	// Középpont alul + felül
 	int baseCenterIndex = meshCPU.vertexArray.size();
-	meshCPU.vertexArray.push_back({ glm::vec3(0, -height / 2.0f, 0), glm::vec3(0.2f, 0.2f, 1.0f) }); // alul
-	meshCPU.vertexArray.push_back({ glm::vec3(0, +height / 2.0f, 0), glm::vec3(0.2f, 0.2f, 1.0f) }); // felül
+	meshCPU.vertexArray.push_back({ glm::vec3(0, -height / 2.0f, 0), glm::vec3(1.0f) });
+	meshCPU.vertexArray.push_back({ glm::vec3(0, +height / 2.0f, 0), glm::vec3(1.0f) });
 
-	// Oldallapok 
 	for (int i = 0; i < N; ++i)
 	{
 		int next = (i + 1) % N;
-		int i0 = i * 2;     // alsó
-		int i1 = i * 2 + 1; // felső
+		int i0 = i * 2;
+		int i1 = i * 2 + 1;
 		int j0 = next * 2;
 		int j1 = next * 2 + 1;
 
@@ -89,7 +84,6 @@ void CMyApp::InitGeometry()
 		meshCPU.indexArray.push_back(j1);
 	}
 
-	// Alsó nyolcszög
 	for (int i = 0; i < N; ++i)
 	{
 		int next = (i + 1) % N;
@@ -98,7 +92,6 @@ void CMyApp::InitGeometry()
 		meshCPU.indexArray.push_back(i * 2);
 	}
 
-	// Felső nyolcszög 
 	for (int i = 0; i < N; ++i)
 	{
 		int next = (i + 1) % N;
@@ -231,7 +224,9 @@ void CMyApp::Update(const SUpdateInfo& updateInfo)
 	static const float TRAVEL_PERIOD = 7.0f;
 	float timeInCycle = fmod(m_ElapsedTimeInSec, TRAVEL_PERIOD);
 	float phase = timeInCycle / TRAVEL_PERIOD;
-	float xPath = -10.0f + 20.0f * 0.5f * (1.0f - cos(2.0f * glm::pi<float>() * phase));
+	float xPath = (phase < 0.5f)
+		? -10.0f + 40.0f * phase
+		: 10.0f - 40.0f * (phase - 0.5f);
 	float yPath = 4.0f * cos(glm::pi<float>() / 5.0f * xPath);
 
 	glm::vec3 pathPos = glm::vec3(xPath, yPath, 0.0f);

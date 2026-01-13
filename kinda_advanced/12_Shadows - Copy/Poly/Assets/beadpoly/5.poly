@@ -1,0 +1,14 @@
+# https://en.wikipedia.org/wiki/Truncated_tetrahedron
+
+PIVOT 3 6 1.2309807214
+PIVOT 6 6 1.9106119322
+
+# Exported from GUI
+START 3
+PUSH 0 6
+PUSH 3 6
+ADD 3 3
+ADD 2 6
+ADD 4 6
+ADD 5 3
+ADD 1 3

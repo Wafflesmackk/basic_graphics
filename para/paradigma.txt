@@ -1,0 +1,285 @@
+1
+Sorolj fel 5-10 fogalmat, témakört, problémát az alábbi paradigmák mindegyikéhez.
+
+Imperatív programozás:
+	A program az állapot lépésről lépésre történő megváltoztatásaként jelenik meg.
+	Változók és állapot (state)
+	Értékadás (x = x + 1)
+	Vezérlési szerkezetek (if, while, for)
+	Szekvenciális végrehajtás
+	Mellékhatások (side effects)
+	Mutatók és memória-kezelés
+	Program állapotának nyomon követése
+	Alacsony szintű vezérlés
+	Tipikus nyelvek: C, Assembly, Pascal
+
+Procedurális programozás
+	Az imperatív programozás strukturáltabb változata, eljárásokra bontva.
+	Eljárások / függvények
+	Paraméterátadás (érték szerint, referencia szerint)
+	Lokális és globális változók
+	Absztrakció eljárásokkal
+	Kód újrahasznosítás
+	Strukturált programozás
+	Verem (stack) és hívási környezet
+	Rekurzió
+	Tipikus nyelvek: C, Pascal, Fortran
+
+Funkcionális programozás:
+	A számítás függvények kiértékeléseként jelenik meg.
+	Tiszta függvények (pure functions)
+	Mellékhatások hiánya
+	Immutabilitás (nem módosítható adatok)
+	Rekurzió ciklusok helyett
+	Magasabb rendű függvények
+	Lambda-kifejezések
+	Lazy (lusta) kiértékelés
+	Mintaillesztés (pattern matching)
+	Referenciális transzparencia
+	Tipikus nyelvek: Haskell, OCaml, F#
+
+Moduláris programozás:
+	A program jól elkülönített, egymással kommunikáló egységekre van bontva.
+	Modulok és interfészek
+	Információelrejtés
+	Láthatóság (public / private)
+	Függőségek kezelése
+	Újrafelhasználhatóság
+	Karbantarthatóság
+	Külön fordítás (separate compilation)
+	Namespace-ek
+	Könyvtárak (libraries)
+	Tipikus nyelvek: Modula-2, Ada, Java, Python
+
+Objektumelvű programozás:
+	A program objektumok együttműködéseként épül fel.
+	Osztály és objektum
+	Encapszuláció
+	Öröklődés
+	Polimorfizmus
+	Absztrakció
+	Metódusok és attribútumok
+	Dinamikus kötés (dynamic binding)
+	Kompozíció vs. öröklés
+	SOLID elvek
+	Tipikus nyelvek: Java, C++, C#, Python
+
+Generikus programozás:
+	Típusfüggetlen, újrafelhasználható algoritmusok és adatszerkezetek.
+	Típusparaméterek (generics)
+	Sablonok (templates)
+	Típusbiztonság
+	Kód újrafelhasználás
+	Fordítás idejű típusellenőrzés
+	Típuskorlátok (bounds)
+	Polimorfizmus (statikus)
+	STL (Standard Template Library)
+	Tipikus nyelvek: C++, Java, Rust
+
+Konkurens és párhuzamos programozás:
+	Több végrehajtási szál vagy folyamat egyidejű kezelése.
+	Szálak (threads)
+	Folyamatok (processes)
+	Szinkronizáció
+	Versenyhelyzet (race condition)
+	Holtpont (deadlock)
+	Mutex, semaphore
+	Párhuzamos vs. konkurens végrehajtás
+	Megosztott memória vs. üzenetküldés
+	Teljesítmény és skálázhatóság
+	Tipikus nyelvek/technológiák: Java Threads, OpenMP, Erlang
+
+2
+Hol tárolódnak egy program változói? Egy Eiffel program változóiról mit mondhatunk? Mik  az expanded osztályok?:
+	Stack (verem) 	Lokális változók, Függvények paraméterei, Aktivációs rekordok, Automatikus élettartam (belépéskor létrejön, kilépéskor megszűnik)
+	Heap (kupac) 	Dinamikusan lefoglalt objektumok, Referenciával elérhető adatok, Hosszabb élettartamú adatok
+	Eiffelben: általában a heapen történik de ha egy osztályt az expanded-el definiálok akkor annak az objektumai közvetelenül érhetőek el nem referencián keresztűl aka stacken van
+
+Milyen szerepekben használható a create kulcsszó? Mit jelent ezekben a szerepekben?
+	| Kód                             | Utasítás / kifejezés | Jelentés                   |
+	| ------------------------------- | -------------------- | -------------------------- |
+	| `create john.set_name`          | Utasítás             | Létrehoz + hozzárendel     |
+	| `create id`                     | Utasítás             | Expanded újrainicializálás |
+	| `create {PERSON}.set_name`      | Kifejezés            | Objektum létrehozása       |
+	| `create {PERSON} jack.set_name` | Utasítás             | Létrehoz + típuskényszer   |
+	| `!PERSON! jack.set_name`        | Utasítás             | Régi szintaxis             |
+
+Milyen utasítások, vezérlési szerkezetek találhatók Eiffelben? Mi a pontosvessző szerepe?
+
+	Az Eiffel egy strukturált, erősen tipizált, objektumelvű programozási nyelv, amely tudatosan kevés, de jól definiált utasítást és vezérlési szerkezetet használ. 
+	Az Eiffel tervezési célja az volt, hogy a program olvasható, egyértelmű és formálisan ellenőrizhető legyen.
+
+	Az Eiffel program végrehajtható elemei az utasítások (instructions), amelyek állapotváltozást okoznak. Ilyen utasítás az értékadás, amikor egy változó új értéket kap, az eljáráshívás, 
+	amikor egy objektum műveletét hívjuk meg, valamint az objektumlétrehozás, amelyet a create kulcsszóval végzünk. Ezeken kívül léteznek összetett utasítások, 
+	amelyek több utasítás egymás utáni végrehajtását jelentik.
+
+	A vezérlés megvalósítására Eiffelben strukturált vezérlési szerkezetek állnak rendelkezésre. Feltételes vezérléshez az if … then … elseif … else … end szerkezet használható, 
+	amely mind utasításként, mind kifejezésként megjelenhet. Ciklusokra egyetlen általános ciklusszerkezet létezik, a from … until … loop … end, 
+	amely képes kiváltani a hagyományos for és while ciklusokat is.
+
+	Az Eiffel nyelv szerves része a Design by Contract, ezért speciális vezérlési és ellenőrzési elemeket is tartalmaz. Ezek az előfeltételek (require), 
+	utófeltételek (ensure), osztályinvariánsok (invariant), valamint a futás közbeni ellenőrzésre szolgáló check utasítás. A hibakezelést az Eiffel kivételkezelő mechanizmusa biztosítja, 
+	amely a do … rescue … end szerkezettel valósul meg, és lehetőséget ad az utasítássor újrapróbálására a retry kulcsszóval.
+
+	A pontosvessző (;) szerepe Eiffelben eltér a C-szerű nyelvekben megszokottól. Eiffelben a pontosvessző nem utasításlezáró, hanem utasításszeparátor. 
+	Ez azt jelenti, hogy az utasítások alapértelmezés szerint soronként elkülönülnek, és a pontosvessző használata nem kötelező. 
+	Elsősorban akkor használjuk, ha egy sorban több utasítást szeretnénk elválasztani egymástól. A vezérlési szerkezetek végét mindig az end kulcsszó jelöli, nem pedig a pontosvessző.
+		
+	▶Értékadás
+	▶ Elágazások
+		▶ if-then-elseif-else-end
+		▶ inspect
+	▶ Ciklusok
+		▶ from-until-loop-end
+		▶ across
+	▶ check
+	▶ debug
+
+	Nincsenek nem strukturált utasítások!
+
+Mire való, hogyan használható a debug utasítás az Eiffelben?
+	A debug utasítás Eiffelben hibakeresési célú utasításblokk, amely csak debug módban hajtódik végre, release módban teljesen kimarad a programból; 
+	használható címkékkel is, amelyekkel a hibakereső kód feltételesen aktiválható.
+	debug
+		-- hibakeresési utasítások
+	end
+
+Milyen változók írhatók (azaz milyen változóknak adhatunk értéket) az Eiffelben? Mi az assign procedure szerepe?
+
+3
+Mutasd be a check utasítás szerepét és hasznát, használatának módját! Más nyelvekben milyen hasonló lehetőséget láthatunk?
+Hogyan néz ki egy until-ciklus az Eiffelben? Hogyan adhatjuk meg a szerződését? Hogyan viszonyul ez a ciklus levezetési szabályához?
+Mik a Hoare-hármasok? Mire használjuk őket?
+Ismétlés más tárgyakból: Hogyan definiáljuk a leggyengébb előfeltételt? Hogyan számíthatjuk ki egy értékadó utasításra?
+Mi egy rutin szerződése az Eiffelben? Hogyan adjuk meg? Hogyan írjuk le a jelentését Hoare-hármassal? Hogyan viszonyul ez az elő- és utófeltételes specifikációkhoz?
+
+4
+Hogyan védekezik az Ada nyelv az üres referenciák által okozott problémákkal szemben?
+Mik az annotációk a Javában? Mire való a javax.annotation.NonNull annotáció?
+Mi a Maybe (avagy Option avagy Optional) típus? Hogyan segít az üres referenciák okozta problémák leküzdésében? Például: hogyan emelhető be egy számítás az Option monádba a Scalában?
+Mit értünk aliasing alatt? Mire jó? Miért okoz problémákat? Hogyan segít a szemétgyűjtés?
+Mik az attached és a detachable típusok az Eiffelben? Hogyan jelöljük őket? Mi a viszonyuk egymáshoz?
+Hogyan kell egy detachable típusú kifejezést értékül adni egy attached változónak?
+Mit értünk dinamikus szemantikai hiba alatt? Miben más ez, mint a statikus szemantikai hiba?
+Mik a dokumentációs megjegyzések? Mire valók? Hogyan írunk ilyet Eiffelben?
+Mire való a safe navigation operator és a null-coalescing operator (időnként Elvis-operator)? Mutasd be példákon!
+Mi a különbség a közönséges és az expanded osztályok között?
+Sorold fel és illusztráld példákon, milyen fajta feature-ök alkotkát az osztálydefiníciókat Eiffelben! Melyik miben tér el a másiktól? Mik azok a lekérdezések?
+Adj áttekintést arról, milyen lehetőségek vannak az üres referenciák által okozott problémák kezelésére a különböző nyelvekben!
+Mik az üres (Eiffelben: Void) referenciák? Milyen problémát okoznak?
+Mi az osztályinvariáns? Magyarázd el szóban is és formálisan megfogalmazott szerződésekkel is a szerepét! Mi a szintaxisa az Eiffelben?
+Mit értünk statikus típusozás alatt? Mutass példát ezt követő, illetve nem követő nyelvekre! Térj ki a típusellenőrzés mellett a típuskikövetkeztetésre is!
+Mit nevezünk szewmétgyűjtésnek (garbage collection)?
+
+5
+
+Mik a mohó és a lusta operátorok? Mutass példát Eiffelben!
+Mi a különbség az imperatív és a funkcionális stílusú rutin között? Mutasd be a divide_by és a divided_by példáján!
+Hogyan fejezhetjük ki a nemváltozás tényét Eiffelben?
+Mire való az old operátor? Hogyan fejezünk ki vele változást és nemváltozást?
+Hogyan kell operátorokat definiálni az Eiffelben?
+Milyen operátorok vannak az Eiffel nyelvben?
+Hogyan működik a paraméterátadás Eiffelben? (2-fajta...)
+Milyen problémát vet fel az aliasing a referencia szerinti paraméterátadásnál? Mutasd be egy példa segítségével!
+
+6
+Sorold fel az ARRAY[T] osztály legfontosabb műveleteit! Mi helyettesíti az elavult make creation procedure-t?
+Mit szokás generikus definíciónak nevezni egy programozási nyelvben? Eiffelben milyen generikus definíciót lehet írni?
+Mi az Eiffel-terminológia jelentése az osztály, generikus osztály és a típus kapcsán?
+Mutasd be egy példán, hogyan kell Eiffelben egy generikus osztályt definiálni, illetve használni!
+
+
+
+7
+Mondd ki a Liskov-féle helyettesítési elvet!
+Hogyan hívjuk meg a régi törzset egy felüldefiniált feature-ben?
+Mit értünk a S.O.L.I.D. elvek alatt?
+Hogyan adjuk meg a dinamikus típust egy create utasításban, illetve egy create kifejezésben?
+Mi a default_create?
+Hogyan fejezzük ki a dinamikus típusellenőrzést az Eiffelben?
+Hogyan módosítható egy rutin szerződése a felüldefiniálás során? Mi ennek a formája?
+Mit jelent az, ha egy osztályba nem írunk invariáns klózt, illetve, ha egy feature-be nem írunk elő- és utófeltételt?
+Hogyan fejezzük ki az öröklődést Eiffelben? Mi az alapvetés?
+Hogyan fejezzük ki a feature-ök láthatóságát Eiffelben? Mik azok a nyilvános és titkos feature-ök?
+Hogyan kell felüldefiniálni egy feature-t az Eiffelben?
+Mire való az átnevezés az Eiffelben? Mutass példát a használatára!
+Mi a kapcsolat az öröklődés és a creation procedure-ök között?
+Mit értünk egy osztály invariánsa alatt? (Vedd figyelembe az öröklődést is!)
+
+8
+Mit értünk absztrakt típus alatt az OOP-nyelvekben? Mi a szerepe? Mi ennek a megfelelője az Eiffelben?
+Mit értünk az alatt, hogy egy absztrakt típus megvalósítása? Mutass példát az Eiffelben (is)! Mit lehet tudni ez ügyben az adattagokról (attribútumokról)?
+Mit jelent a kovariáns visszatérési típus? Mutass rá példát! Miért jó?
+Lehet deferred feature-nek szerződése? Magyarázd el!
+Mit jelent a frozen kulcsszó egy művelet deklarációjában? És egy osztály deklarációjában?
+Mi a módja az Eiffelben annak, hogy egy modul használ egy másik modult?
+Mik a once-rutinok az Eiffelben? Hogyan működnek? Milyen veszéllyel járnak?
+
+9
+Milyen problémát vet fel a kovariáns paraméter?
+Milyen alakúak, milyen tulajdonságúak az A -> B függvények típusának altípusai?
+Mit értünk binary method alatt? Mutass példát is rá!
+Mit jelent a kovariáns visszatérési érték (covariant return) kifejezés? Mutass rá példát!
+Magyarázd el, mit jelent a kapcsolt típus (achored type) az Eiffelben! Mire jó? Mi az előnye?
+Mit jelent a kontravariáns típus kifejezés? Mutass példát pszeudokóddal!
+Mit jelent a kovariáns típusú paraméter? Mutass példát, amely ennek az előnyét tárja fel!
+Mit jelent  polymorphic CAT-call kifejezés? Miért érdekes ez a fogalom?
+Miben hasonlít a függvénytípusok altípusaira vonatkozó szabály az Eiffel feature-ök szerződéseinek öröklődéssel kapcsolatos mechanizmusára?
+Hogyan néz ki az Eiffelben az ANY osztály klónozásra bevezetett twin művelete?
+
+
+10
+Mit jelent a = és a ~ operátor az Eiffelben?
+Milyen tulajdonságokkal kell rendelkezzen egy ekvivalenciareláció, és milyenekkel egy parciális rendezés?
+Hogyan definiálhatunk saját logikájú (custom) tartalmi összehasonlítást egy Eiffel osztályban?
+Mi a különbség a referencia-, illetve a kifejtett típusokon definiált egyenlőségvizsgálatok között?
+Hogyan függnek össze, hogyan alkotnak rendszert az egyenlőségvizsgálatra és az objektummásolásra szolgáló feature-ök az Eiffelben?
+Hogyan viszonyulnak egymáshoz a standard_equal, az equal és a deep_equals relációk?
+Hogyan függ az equal az is_equal-tól?
+Mi a különbség az object identity és az object equality között?
+Mi az is_equal szignatúrája az Eiffel ANY osztályában?
+Mi a szerződése az is_equal-nak? Mi az alapértelmezett implementációja?
+Mit illik tudni a Java egyenlőségvizsgálatot végző equals metódusának paramétertípusáról? Hogyan kapcsolódik ez a felüldefiniálás és a túlterhelés kérdéséhez?
+Hogyan viszonyulhat az altípusosság az egyenlőségvizsgálathoz? Mi a két fő lehetőség?
+Mi a különbség a sekély és a mély összehasonlítás között?
+Mit értünk az alatt, hogy öröklődés kiváltása kompozícióval?
+
+
+11
+A strukturális típusosságnál miben tér el az értékekre, illetve a változókra vonatkozó altípusfogalom? Azaz mi a fő különbség a funkcionális és az imperatív paradigma között ebben a tekintetben?
+Mutass példát a conversion function működésére, használatára az Eiffelben!
+Mutass példát a conversion procedure működésére, használatára az Eiffelben!
+Mit nevezünk curryingnek?
+Mit értünk downcast alatt? Hogyan fordul elő ilyen az Eiffelben? Mutass példát!
+Mit értünk duck-typing alatt? Mutass példát!
+Milyen altípus-relációban vehetnek részt  a kifejtett (expanded) típusok?
+Mi a nominális és a strukturális típusekvivalencia, illetve altípusosság?
+Mit értünk privát öröklődés alatt? Milyen tulajdonságai vannak? Hogyan csinálunk ilyet az Eiffelben?
+Milyenek a prototípus alapú objektumelvű nyelvek? Mi jellemzi őket?
+Hogyan definiálhatjuk a strukturális altípusosságot az összetett típusú módosítható változókra?
+Hogyan definiálhatjuk a strukturális altípusosságot az összetett típusú értékekre?
+Mit értünk upcast alatt? Hogyan fordul elő ilyen az Eiffelben? Mutass példát!
+
+
+12
+Sorolj fel nyelveket, melyek csak egyszeres, illetve többszörös öröklődést is támogatnak!
+Mit értünk ismételt öröklődés (repeated inheritance) alatt?
+Hogyan oldja meg az Eiffel a többszörös öröklődés szokásos problémáit?
+Mire jó az select kulcsszó az Eiffelben?
+Milyen különböző eseteket különböztethetünk meg a többszörös öröklődésben a szülőtípusokhoz való konformitás jegyében? Mutass példákat!
+Milyen problémákat okozhat a többszörös öröklődés pl. a C++ nyelvben?
+Mire jó az undefine kulcsszó az Eiffelben?
+
+
+13
+Adható-e új érték egy attribútumnak? Mi az assign procedure?
+Mit jelent a CAT az Eiffelben? Magyarázd el!
+Megváltoztatható egy feature a láthatósága az öröklődés során? Hogyan? Milyen problémát vet ez fel?
+Milyen lehetőségek vannak az Eiffelben a láthatóság megadására? Hol lehet ezeket a lehetőségeket használni, mire lehet megadni a láthatóságot?
+Milyen problémát okoznak az Eiffelben a módosítható (mutable) adattagok az információ elrejtésében?
+Mit tekinthetünk mutable, illetve immutable objektumnak?
+Mik a jellemző láthatósági kategóriák az OOP-nyelvekben? Hogyan feleltethető meg ennek az Eiffel módszere?
+Mit jelent a szelektív láthatóság az Eiffelben? Hogyan viszonyul az altípusossághoz?
+Mit jelent az Eiffelben a titkos feature fogalma? Mennyire titkos?
+
+

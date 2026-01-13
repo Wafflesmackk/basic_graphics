@@ -1,0 +1,10 @@
+# J12 - Triangular bipyramid
+# https://en.wikipedia.org/wiki/Triangular_bipyramid
+PIVOT_POLY 3 3 3
+START 3
+ADD  0
+ADD  1
+# 0.6796738228 = pi - 2*dihedral(3,3,3)
+PUSH 2 3 0.6796738228
+ADD  1
+ADD  2

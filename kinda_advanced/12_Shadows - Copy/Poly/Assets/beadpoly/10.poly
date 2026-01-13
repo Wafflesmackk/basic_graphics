@@ -1,0 +1,34 @@
+# https://en.wikipedia.org/wiki/Rhombicuboctahedron
+
+PIVOT 3 4 0.6154797087
+PIVOT 4 4 0.7853981634
+
+START 4
+ADD 3 4
+ADD 1 4
+PUSH 0 4
+ADD 1 3
+ADD 3 3
+PUSH 2 4
+ADD 3 4
+ADD 1 4
+PUSH 2 4
+ADD 1 3
+ADD 3 3
+PUSH 2 4
+PUSH 1 4
+ADD 2 4
+POP
+PUSH 3 4
+ADD 2 4
+POP
+PUSH 2 4
+ADD 1 3
+ADD 3 3
+PUSH 2 4
+ADD 3 4
+ADD 1 4
+PUSH 2 4
+ADD 1 3
+ADD 3 3
+

@@ -1,0 +1,60 @@
+# Snub cube
+# https://en.wikipedia.org/wiki/Snub_cube
+# 3-3: 153°14′04″ (153.23°) -> 2.6744455830
+# 3-4: 142°59′00″ (142.98°) -> 2.4955299421
+# 0.4671470706 = pi - 2.6744455830
+PIVOT 3 3 0.4671470706
+# 0.6460627115 = pi - 2.4955299421
+PIVOT 3 4 0.6460627115
+START 4
+PUSH 0 3
+  PUSH 2 3
+    ADD 1 4
+  POP
+POP
+PUSH 1 3
+  ADD 1 3
+  PUSH 2 3
+    ADD 2 3
+	PUSH 1 4
+	  PUSH 1 3
+	    ADD 2 3
+	  POP
+	  PUSH 2 3
+	    ADD 1 3
+		PUSH 2 3
+		  ADD 2 3
+		POP
+	  POP
+	  PUSH 3 3
+	    ADD 2 3
+	  POP
+	POP
+  POP
+POP
+PUSH 2 3
+  PUSH 2 3
+    ADD 1 4
+  POP
+POP
+PUSH 3 3
+  ADD 1 3
+  PUSH 2 3
+    ADD 2 3
+	PUSH 1 4
+	  PUSH 1 3
+	    ADD 2 3
+	  POP
+	  PUSH 3 3
+	    ADD 2 3
+	  POP
+	  PUSH 2 3
+	    ADD 1 3
+		PUSH 2 3
+		  ADD 2 3
+		  PUSH 1 4
+		    PUSH 1 3
+			  ADD 2 3
+			POP
+			PUSH 3 3
+			  ADD 2 3

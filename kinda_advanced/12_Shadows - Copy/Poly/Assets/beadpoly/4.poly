@@ -1,0 +1,29 @@
+# https://en.wikipedia.org/wiki/Elongated_pentagonal_bipyramid
+
+PIVOT 3 3 0.7297221603
+PIVOT 3 4 0.9183922524
+PIVOT 4 4 1.2566370614
+
+
+START 4
+PUSH 0 3
+ADD 2 3
+PUSH 1 3
+PUSH 2 3
+PUSH 2 3
+POP
+POP
+POP
+POP
+PUSH 2 3
+PUSH 2 3
+ADD 2 4
+PUSH 1 3
+ADD 2 4
+POP
+POP
+PUSH 1 3
+ADD 1 4
+PUSH 2 3
+ADD 1 4
+
